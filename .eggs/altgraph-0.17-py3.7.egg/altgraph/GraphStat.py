@@ -17,21 +17,13 @@ def degree_dist(graph, limits=(0, 0), bin_num=10, mode="out"):
         ....
     """
 
-    deg = []
-    if mode == "inc":
-        get_deg = graph.inc_degree
-    else:
-        get_deg = graph.out_degree
-
-    for node in graph:
-        deg.append(get_deg(node))
+    get_deg = graph.inc_degree if mode == "inc" else graph.out_degree
+    deg = [get_deg(node) for node in graph]
 
     if not deg:
         return []
 
-    results = _binning(values=deg, limits=limits, bin_num=bin_num)
-
-    return results
+    return _binning(values=deg, limits=limits, bin_num=bin_num)
 
 
 _EPS = 1.0 / (2.0 ** 32)
